@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtilities.generateToken(user.getUsername(), user.getId(), user.getRole().getRoleName());
         return token;
     }
+
+    @Override
+    public User getById(Long userId) {
+        return userRepository.findById(userId).orElse(null);
+    }
 }

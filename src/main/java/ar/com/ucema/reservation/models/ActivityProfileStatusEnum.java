@@ -15,4 +15,13 @@ public enum ActivityProfileStatusEnum {
     public String getStatusName() {
         return statusName;
     }
+
+    public static ActivityProfileStatusEnum getStatusByName(String name) {
+        for (ActivityProfileStatusEnum status : ActivityProfileStatusEnum.values()) {
+            if (status.getStatusName().equals(name)) {
+                return status;
+            }
+        }
+        return null;
+    }
 }

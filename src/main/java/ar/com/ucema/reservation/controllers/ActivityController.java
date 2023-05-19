@@ -11,4 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/activities")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class ActivityController {
+
+
 }

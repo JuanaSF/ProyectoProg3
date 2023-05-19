@@ -20,7 +20,6 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    @Operation(summary = "My endpoint", security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<?> CreateUser(@RequestBody User user) {
 
         User newUser = userService.createUser(user);
