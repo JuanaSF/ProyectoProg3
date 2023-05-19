@@ -6,13 +6,13 @@ public enum RoleEnum {
     PROVIDER("Provider"),
     ADMIN("Admin");
 
-    private String roleName;
+    private String name;
 
     RoleEnum(String roleName) {
-        this.roleName = roleName;
+        this.name = roleName;
     }
 
     public String getRoleName() {
-        return roleName;
+        return name;
     }
 }

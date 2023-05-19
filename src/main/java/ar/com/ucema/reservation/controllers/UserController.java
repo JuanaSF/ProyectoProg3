@@ -1,24 +1,30 @@
 package ar.com.ucema.reservation.controllers;
 
+import ar.com.ucema.reservation.models.User;
+import ar.com.ucema.reservation.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/users")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserController {
 
-    @GetMapping(path = "/test")
-    public ResponseEntity<?> getUsers() {
-        List<String> users = new ArrayList<>();
+    @Autowired
+    private UserService userService;
 
-        users.add("User1");
-        users.add("User2");
+    @PostMapping
+    @Operation(summary = "My endpoint", security = @SecurityRequirement(name = "bearerAuth"))
+    public ResponseEntity<?> CreateUser(@RequestBody User user) {
 
-        return ResponseEntity.ok(users);
+        User newUser = userService.createUser(user);
+
+        return ResponseEntity.ok(newUser);
     }
 }

@@ -1,10 +1,17 @@
 package ar.com.ucema.reservation.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @Column(name = "user_id")
@@ -14,7 +21,7 @@ public class User {
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     @Column(length = 100, nullable = false)
@@ -26,8 +33,6 @@ public class User {
 
     @Column(nullable = false)
     private Boolean deleted = false;
-
-    /*
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -43,7 +48,7 @@ public class User {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -65,13 +70,17 @@ public class User {
     public boolean isEnabled() {
         return true;
     }
-*/
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
