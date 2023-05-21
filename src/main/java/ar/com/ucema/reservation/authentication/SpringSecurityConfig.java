@@ -31,11 +31,8 @@ public class SpringSecurityConfig {
                 //Inicia la configuración de las reglas de autorización de las solicitudes HTTP
                 .authorizeHttpRequests()
                 // Establece que cualquiera puede ejecutar los endpoints de esa ruta
-                .requestMatchers("/api/**","/swagger-ui.html", "/actuator/**","/swagger-ui/**", "/api-docs/**").permitAll()
-                // Establece que solo autenticados pueden ejecutar los endpoints de esa ruta
-                //.requestMatchers("/api/card/**").authenticated()
-                // Establece que solo usuarios administradores pueden ejecutar los endpoints de esa ruta
-                //.requestMatchers("/api/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/api/auth/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**",
+                        "/swagger-ui.html", "/webjars/**", "/v3/api-docs/**").permitAll()
                 // Para cualquier otra request, debe haber un usuario autenticado.
                 .anyRequest().authenticated();
         // Agregamos un filtro personalizado

@@ -4,7 +4,6 @@ import ar.com.ucema.reservation.authentication.JwtUtilities;
 import ar.com.ucema.reservation.models.User;
 import ar.com.ucema.reservation.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager ;
 
     @Override
     public User createUser(User user) {
@@ -45,5 +41,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    @Override
+    public User getByEmail(String username) {
+        return userRepository.findByEmail(username).orElse(null);
     }
 }

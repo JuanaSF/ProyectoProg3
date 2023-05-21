@@ -15,6 +15,6 @@ public class AuthController {
 
     @PostMapping(path = "/login")
     public String authenticate(@RequestBody LoginDTO loginDTO) {
-        return this.userService.authenticate(loginDTO.getUsername(), loginDTO.getPassword());
+        return userService.authenticate(loginDTO.getUsername(), loginDTO.getPassword());
     }
 }

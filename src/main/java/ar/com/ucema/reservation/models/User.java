@@ -19,7 +19,10 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(length = 100, nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(length = 100)
+    private String lastName;
 
     @Column(length = 100, nullable = false, unique = true)
     private String email;
@@ -79,12 +82,20 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {

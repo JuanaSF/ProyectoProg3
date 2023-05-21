@@ -9,4 +9,6 @@ public interface UserService {
     String authenticate(String username, String password);
 
     User getById(Long userId);
+
+    User getByEmail(String username);
 }
