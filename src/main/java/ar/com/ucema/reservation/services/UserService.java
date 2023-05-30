@@ -1,10 +1,11 @@
 package ar.com.ucema.reservation.services;
 
+import ar.com.ucema.reservation.dto.SignUpDTO;
 import ar.com.ucema.reservation.models.User;
 
 public interface UserService {
 
-    User createUser(User user);
+    User createUser(SignUpDTO signUpDTO);
 
     String authenticate(String username, String password);
 

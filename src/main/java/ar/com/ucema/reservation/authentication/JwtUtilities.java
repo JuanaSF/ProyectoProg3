@@ -1,10 +1,9 @@
 package ar.com.ucema.reservation.authentication;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +16,8 @@ public class JwtUtilities {
 
     private static final String secret = "2b44b0b00fd822d8ce753e54dac3dc4e06c2725f7db930f3b9924468b53194dbccdbe23d7baa5ef5fbc414ca4b2e64700bad60c5a7c45eaba56880985582fba4";
     private static final Long expiration = 3600L;
+
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtilities.class);
 
     public String generateToken(String username, Long id, String role) {
         return Jwts.builder()
@@ -40,10 +41,18 @@ public class JwtUtilities {
     public boolean validateToken(String token) {
         try {
             // Si puedo obtener las claims entonces el token es valido
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return !isTokenExpired(token);
-        } catch (Exception e) {
-            // Si el token no es valido, puedo realizar alguna acción
+        } catch (SignatureException ex) {
+            logger.error("Invalid JWT signature");
+        } catch (MalformedJwtException ex) {
+            logger.error("Invalid JWT token");
+        } catch (ExpiredJwtException ex) {
+            logger.error("Expired JWT token");
+        } catch (UnsupportedJwtException ex) {
+            logger.error("Unsupported JWT token");
+        } catch (IllegalArgumentException ex) {
+            logger.error("JWT claims string is empty.");
         }
         return false;
     }

@@ -20,6 +20,9 @@ public class SpringSecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -34,7 +37,9 @@ public class SpringSecurityConfig {
                 .requestMatchers("/api/auth/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html", "/webjars/**", "/v3/api-docs/**").permitAll()
                 // Para cualquier otra request, debe haber un usuario autenticado.
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint); // manejo exception cuando falle la autenticación
         // Agregamos un filtro personalizado
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
