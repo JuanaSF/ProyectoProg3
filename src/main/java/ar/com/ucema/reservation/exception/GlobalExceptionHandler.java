@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,8 +51,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         ErrorMessage result = new ErrorMessage(HttpStatus.BAD_REQUEST,
                 "JSON parse error", "The provided JSON is invalid or cannot be read correctly");
-        logger.error("Unknown Error: " + ex.getMessage(), ex);
+        logger.error("HttpMessageNotReadableException: " + ex.getMessage(), ex);
         return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorMessage> handleAccessDeniedException(AccessDeniedException ex) {
+        ErrorMessage result = new ErrorMessage(HttpStatus.FORBIDDEN, "Access denied",
+                "You do not have sufficient permissions to perform this action");
+        logger.error("AccessDeniedException: " + ex.getMessage(), ex);
+        return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)

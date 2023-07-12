@@ -32,6 +32,18 @@ public class ActivityProfile {
     @Enumerated(EnumType.STRING)
     private ActivityProfileStatusEnum status;
 
+    public ActivityProfile() {
+    }
+
+    public ActivityProfile(String title, String description, String category, Integer maxCapacity, Double price, ActivityProfileStatusEnum status) {
+        this.title = title;
+        this.description = description;
+        this.category = category;
+        this.maxCapacity = maxCapacity;
+        this.price = price;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

@@ -86,6 +86,8 @@ public class UserServiceImpl implements UserService {
                 throw new ServiceException("Unable to change email", "Email modification is not allowed");
             }
         }
+
+        // Aca revisar que el user nunca cambie de rol
     }
 
     @Override
@@ -107,5 +109,18 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(username);
         if (user == null) throw new ResourceNotFoundException("User not found for email: " + username);
         return user;
+    }
+
+    @Override
+    public User updateUser(Long id, User user) {
+        validateUser(user);
+
+        User userDB = getById(id);
+
+        userDB.setFirstName(user.getFirstName());
+        userDB.setLastName(user.getLastName());
+        userDB.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(userDB);
     }
 }

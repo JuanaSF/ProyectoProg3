@@ -8,22 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping(value = "/api/users")
+@SecurityRequirement(name = "Bearer Auth")
 @CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<?> CreateUser(@RequestBody User user) {
-
-        User newUser = userService.createUser(user);
-
-        return ResponseEntity.ok(newUser);
+    @Operation(summary = "endpoint to update user info")
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 }

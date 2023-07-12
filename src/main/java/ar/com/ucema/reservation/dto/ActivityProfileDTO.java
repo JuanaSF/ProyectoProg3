@@ -1,25 +1,15 @@
 package ar.com.ucema.reservation.dto;
 
 import ar.com.ucema.reservation.models.ActivityProfileStatusEnum;
-import ar.com.ucema.reservation.models.ActivityStatusEnum;
 
 public class ActivityProfileDTO {
 
-    private Long userId;
     private String title;
     private String description;
     private String category;
     private Integer maxCapacity;
     private Double price;
     private ActivityProfileStatusEnum status;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getTitle() {
         return title;
