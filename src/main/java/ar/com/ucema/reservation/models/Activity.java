@@ -1,8 +1,9 @@
 package ar.com.ucema.reservation.models;
 
+import ar.com.ucema.reservation.enumeration.ActivityStatusEnum;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "activity")
@@ -17,10 +18,6 @@ public class Activity {
     @JoinColumn(name = "ActivityProfileId", referencedColumnName="activity_profile_id")
     private ActivityProfile profile;
 
-    @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName="user_id")
-    private User provider;
-
     @Column(nullable = false)
     private String title;
 
@@ -34,7 +31,7 @@ public class Activity {
     @Column(nullable = false)
     private Double price;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -46,14 +43,6 @@ public class Activity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getProvider() {
-        return provider;
-    }
-
-    public void setProvider(User provider) {
-        this.provider = provider;
     }
 
     public String getTitle() {
@@ -96,11 +85,11 @@ public class Activity {
         this.price = price;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -118,5 +107,9 @@ public class Activity {
 
     public void setProfile(ActivityProfile profile) {
         this.profile = profile;
+    }
+
+    public boolean isAvailable(int attendeeCount) {
+        return (availableCapacity - attendeeCount) >= 0;
     }
 }

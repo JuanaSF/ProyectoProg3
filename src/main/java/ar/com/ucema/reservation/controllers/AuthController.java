@@ -1,6 +1,7 @@
 package ar.com.ucema.reservation.controllers;
 
 import ar.com.ucema.reservation.dto.LoginDTO;
+import ar.com.ucema.reservation.dto.ResponseLoginDTO;
 import ar.com.ucema.reservation.dto.SignUpDTO;
 import ar.com.ucema.reservation.models.User;
 import ar.com.ucema.reservation.services.UserService;
@@ -19,8 +20,8 @@ public class AuthController {
 
     @Operation(summary = "endpoint to authenticate user by email and password")
     @PostMapping(path = "/login")
-    public String authenticate(@RequestBody LoginDTO loginDTO) {
-        return userService.authenticate(loginDTO.getUsername(), loginDTO.getPassword());
+    public ResponseLoginDTO authenticate(@RequestBody LoginDTO loginDTO) {
+        return new ResponseLoginDTO(userService.authenticate(loginDTO.getUsername(), loginDTO.getPassword()));
     }
 
     @Operation(summary = "endpoint to register a user")

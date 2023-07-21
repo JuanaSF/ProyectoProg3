@@ -30,6 +30,15 @@ public class ActivityProfileController {
         return ResponseEntity.ok(newProfile);
     }
 
+    @PreAuthorize("hasAuthority('PROVIDER')")
+    @Operation(summary = "endpoint to update an activity profile")
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<ActivityProfile> updateActivityProfile(@RequestBody ActivityProfileDTO profile, @PathVariable Long id) {
+        ActivityProfile newProfile = activityProfileService.updateActivityProfile(profile, id);
+
+        return ResponseEntity.ok(newProfile);
+    }
+
     @Operation(summary = "endpoint to get list of activity profiles")
     @GetMapping
     public List<ActivityProfile> getActivityProfiles() {

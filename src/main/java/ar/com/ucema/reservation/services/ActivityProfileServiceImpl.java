@@ -1,13 +1,17 @@
 package ar.com.ucema.reservation.services;
 
 import ar.com.ucema.reservation.dto.ActivityProfileDTO;
+import ar.com.ucema.reservation.dto.AvailabilityDTO;
 import ar.com.ucema.reservation.exception.InvalidFieldsException;
+import ar.com.ucema.reservation.exception.ResourceNotFoundException;
 import ar.com.ucema.reservation.models.ActivityProfile;
+import ar.com.ucema.reservation.models.Availability;
 import ar.com.ucema.reservation.models.User;
 import ar.com.ucema.reservation.repositories.ActivityProfileRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +29,19 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
     private UserDetailsServiceImpl userDetailsService;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ActivityProfile> getAllProfiles() {
         return (List<ActivityProfile>) activityProfileRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ActivityProfile> getByProviderId(Long id) {
         return activityProfileRepository.findByProviderId(id);
     }
 
     @Override
+    @Transactional
     public ActivityProfile createActivityProfile(ActivityProfileDTO profile) {
         ActivityProfile newProfile = new ActivityProfile(profile.getTitle(), profile.getDescription(),
                 profile.getCategory(), profile.getMaxCapacity(), profile.getPrice(), profile.getStatus());
@@ -49,6 +56,19 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
         newProfile.setMaxCapacity(profile.getMaxCapacity());
         newProfile.setPrice(profile.getPrice());
         newProfile.setStatus(profile.getStatus());
+
+        if (profile.getAvailability() != null && !profile.getAvailability().isEmpty()) {
+            newProfile.setAvailability(new ArrayList<>());
+
+            for (AvailabilityDTO a : profile.getAvailability()) {
+                Availability availability = new Availability();
+
+                availability.setDayOfWeek(a.getDayOfWeek());
+                availability.setHours(a.getHours());
+
+                newProfile.loadAvailability(availability);
+            }
+        }
 
          return save(newProfile);
     }
@@ -91,8 +111,39 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ActivityProfile getById(Long id) {
-        return activityProfileRepository.findById(id).orElse(null);
+        return activityProfileRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Activity profile not found for Id: " + id));
+    }
+
+    @Override
+    @Transactional
+    public ActivityProfile updateActivityProfile(ActivityProfileDTO profile, Long id) {
+
+        ActivityProfile profileDB = getById(id);
+
+        profileDB.setTitle(profile.getTitle());
+        profileDB.setDescription(profile.getDescription());
+        profileDB.setCategory(profile.getCategory());
+        profileDB.setMaxCapacity(profile.getMaxCapacity());
+        profileDB.setPrice(profile.getPrice());
+        profileDB.setStatus(profile.getStatus());
+
+        if (profile.getAvailability() != null && !profile.getAvailability().isEmpty()) {
+
+            for (AvailabilityDTO a : profile.getAvailability()) {
+                Availability availability = new Availability();
+
+                availability.setDayOfWeek(a.getDayOfWeek());
+                availability.setHours(a.getHours());
+
+                profileDB.loadAvailability(availability);
+            }
+        }
+
+        save(profileDB);
+
+        return profileDB;
     }
 
     private ActivityProfile save(ActivityProfile profile) {

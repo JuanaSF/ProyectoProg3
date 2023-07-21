@@ -5,7 +5,7 @@ import ar.com.ucema.reservation.dto.SignUpDTO;
 import ar.com.ucema.reservation.exception.InvalidFieldsException;
 import ar.com.ucema.reservation.exception.ResourceNotFoundException;
 import ar.com.ucema.reservation.exception.ServiceException;
-import ar.com.ucema.reservation.models.RoleEnum;
+import ar.com.ucema.reservation.enumeration.RoleEnum;
 import ar.com.ucema.reservation.models.User;
 import ar.com.ucema.reservation.repositories.UserRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +35,10 @@ public class UserServiceImpl implements UserService {
     private AuthenticationManager authenticationManager;
 
     @Override
+    @Transactional
     public User createUser(SignUpDTO signUpDTO) {
         User user = new User(signUpDTO.getFirstName(), signUpDTO.getLastName(),
-                signUpDTO.getEmail(), signUpDTO.getPassword(), signUpDTO.getRoleEnum());
+                signUpDTO.getEmail(), signUpDTO.getPassword(), signUpDTO.getRole());
         validateUser(user);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -100,11 +102,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getById(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found for Id: " + userId));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByEmail(String username) {
         User user = userRepository.findByEmail(username);
         if (user == null) throw new ResourceNotFoundException("User not found for email: " + username);
@@ -112,6 +116,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(Long id, User user) {
         validateUser(user);
 

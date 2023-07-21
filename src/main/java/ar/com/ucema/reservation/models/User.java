@@ -1,7 +1,10 @@
 package ar.com.ucema.reservation.models;
 
+import ar.com.ucema.reservation.enumeration.RoleEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -31,6 +34,10 @@ public class User {
     @JsonIgnore
     @Column(nullable = false)
     private Boolean deleted = false;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = {})
+    @JsonIgnore
+    private List<Reservation> reservations;
 
     public User() {}
 
@@ -96,5 +103,13 @@ public class User {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 }

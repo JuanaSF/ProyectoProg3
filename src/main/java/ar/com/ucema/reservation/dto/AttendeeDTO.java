@@ -1,50 +1,17 @@
-package ar.com.ucema.reservation.models;
+package ar.com.ucema.reservation.dto;
 
 import ar.com.ucema.reservation.enumeration.AttendeeTypeEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "attendee")
-public class Attendee {
+public class AttendeeDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "attendee_id")
-    private Long id;
-
-    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
-
-    @Column(name = "last_name", length = 100, nullable = false)
     private String lastName;
-
-    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
-
-    @Column(name = "document_number")
     private String documentNumber;
-
     private String nationality;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private AttendeeTypeEnum attendeeType;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "reservation_id", nullable = false)
-    private Reservation reservation;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -92,13 +59,5 @@ public class Attendee {
 
     public void setAttendeeType(AttendeeTypeEnum attendeeType) {
         this.attendeeType = attendeeType;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 }

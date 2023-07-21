@@ -15,4 +15,6 @@ public interface ActivityProfileService {
     ActivityProfile createActivityProfile(ActivityProfileDTO profile);
 
     ActivityProfile getById(Long id);
+
+    ActivityProfile updateActivityProfile(ActivityProfileDTO profile, Long id);
 }

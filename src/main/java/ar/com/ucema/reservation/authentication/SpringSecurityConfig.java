@@ -3,6 +3,7 @@ package ar.com.ucema.reservation.authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -30,6 +31,7 @@ public class SpringSecurityConfig {
         http
                 //Deshabilita la protección CSRF (Cross-Site Request Forgery)
                 .csrf().disable()
+                .cors().and()
                 //Establece la creación de sesiones en STATELESS, la aplicación no cree sesiones de usuario
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -38,6 +40,8 @@ public class SpringSecurityConfig {
                 // Establece que cualquiera puede ejecutar los endpoints de esa ruta
                 .requestMatchers("/api/auth/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html", "/webjars/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/activity-profiles/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/activity-profiles").permitAll()
                 // Para cualquier otra request, debe haber un usuario autenticado.
                 .anyRequest().authenticated()
                 .and().exceptionHandling()

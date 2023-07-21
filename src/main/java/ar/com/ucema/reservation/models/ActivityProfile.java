@@ -1,6 +1,10 @@
 package ar.com.ucema.reservation.models;
 
+import ar.com.ucema.reservation.enumeration.ActivityProfileStatusEnum;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "activity_profile")
@@ -31,6 +35,10 @@ public class ActivityProfile {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ActivityProfileStatusEnum status;
+
+    @OneToMany(mappedBy = "activityProfile", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Availability> availability;
 
     public ActivityProfile() {
     }
@@ -106,5 +114,18 @@ public class ActivityProfile {
 
     public void setStatus(ActivityProfileStatusEnum status) {
         this.status = status;
+    }
+
+    public List<Availability> getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(List<Availability> availability) {
+        this.availability = availability;
+    }
+
+    public void loadAvailability(Availability availability) {
+        this.availability.add(availability);
+        availability.setActivityProfile(this);
     }
 }

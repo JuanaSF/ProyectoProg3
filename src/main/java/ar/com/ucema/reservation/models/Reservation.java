@@ -1,8 +1,9 @@
 package ar.com.ucema.reservation.models;
 
+import ar.com.ucema.reservation.enumeration.ReservationStatusEnum;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,13 @@ public class Reservation {
     @JoinColumn(name = "activityId", referencedColumnName="activity_id")
     private Activity activity;
 
-    private LocalDate date;
+    @Column(name = "reservation_date")
+    private LocalDateTime reservationDate;
+
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    private Double price;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -31,7 +38,7 @@ public class Reservation {
     @Column(name = "attendee_count", nullable = false)
     private Integer attendeeCount;
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Attendee> attendees;
 
     public Long getId() {
@@ -58,12 +65,28 @@ public class Reservation {
         this.activity = activity;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getReservationDate() {
+        return reservationDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setReservationDate(LocalDateTime reservationDate) {
+        this.reservationDate = reservationDate;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public ReservationStatusEnum getStatus() {
@@ -88,5 +111,10 @@ public class Reservation {
 
     public void setAttendees(List<Attendee> attendees) {
         this.attendees = attendees;
+    }
+
+    public void loadAttendee(Attendee attendee) {
+        attendees.add(attendee);
+        attendee.setReservation(this);
     }
 }

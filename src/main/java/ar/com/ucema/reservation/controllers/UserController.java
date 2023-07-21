@@ -17,6 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Operation(summary = "endpoint to get user info")
+    @GetMapping(path = "/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getById(id);
+    }
+
     @Operation(summary = "endpoint to update user info")
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {

@@ -1,4 +1,4 @@
-package ar.com.ucema.reservation.models;
+package ar.com.ucema.reservation.enumeration;
 
 public enum AttendeeTypeEnum {
     CHILD("Child"),

@@ -1,6 +1,6 @@
 package ar.com.ucema.reservation.dto;
 
-import ar.com.ucema.reservation.models.RoleEnum;
+import ar.com.ucema.reservation.enumeration.RoleEnum;
 
 public class SignUpDTO {
 
@@ -8,7 +8,7 @@ public class SignUpDTO {
     private String lastName;
     private String email;
     private String password;
-    private RoleEnum roleEnum;
+    private RoleEnum role;
 
     public String getFirstName() {
         return firstName;
@@ -42,11 +42,11 @@ public class SignUpDTO {
         this.password = password;
     }
 
-    public RoleEnum getRoleEnum() {
-        return roleEnum;
+    public RoleEnum getRole() {
+        return role;
     }
 
-    public void setRoleEnum(RoleEnum roleEnum) {
-        this.roleEnum = roleEnum;
+    public void setRole(RoleEnum role) {
+        this.role = role;
     }
 }
