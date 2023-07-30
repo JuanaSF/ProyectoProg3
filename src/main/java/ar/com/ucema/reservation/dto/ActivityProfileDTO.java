@@ -1,7 +1,6 @@
 package ar.com.ucema.reservation.dto;
 
 import ar.com.ucema.reservation.enumeration.ActivityProfileStatusEnum;
-import ar.com.ucema.reservation.models.Availability;
 
 import java.util.List;
 
@@ -10,6 +9,7 @@ public class ActivityProfileDTO {
     private String title;
     private String description;
     private String category;
+    private String mainImage;
     private Integer maxCapacity;
     private Double price;
     private ActivityProfileStatusEnum status;
@@ -37,6 +37,14 @@ public class ActivityProfileDTO {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public Integer getMaxCapacity() {

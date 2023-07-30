@@ -40,6 +40,7 @@ public class ActivityServiceImpl implements ActivityService {
         newActivity.setTitle(activityProfile.getTitle());
         newActivity.setDescription(activityProfile.getDescription());
         newActivity.setCategory(activityProfile.getCategory());
+        newActivity.setMainImage(activityProfile.getMainImage());
         newActivity.setAvailableCapacity(activityProfile.getMaxCapacity());
         newActivity.setPrice(activityProfile.getPrice());
         newActivity.setDate(activity.getActivityDate());

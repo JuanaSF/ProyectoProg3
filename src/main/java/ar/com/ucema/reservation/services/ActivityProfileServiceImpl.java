@@ -44,7 +44,7 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
     @Transactional
     public ActivityProfile createActivityProfile(ActivityProfileDTO profile) {
         ActivityProfile newProfile = new ActivityProfile(profile.getTitle(), profile.getDescription(),
-                profile.getCategory(), profile.getMaxCapacity(), profile.getPrice(), profile.getStatus());
+                profile.getCategory(), profile.getMainImage(), profile.getMaxCapacity(), profile.getPrice(), profile.getStatus());
         validateProfile(newProfile);
 
         User provider = userDetailsService.getAuthenticatedUser();
@@ -125,6 +125,7 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
         profileDB.setTitle(profile.getTitle());
         profileDB.setDescription(profile.getDescription());
         profileDB.setCategory(profile.getCategory());
+        profileDB.setMainImage(profile.getMainImage());
         profileDB.setMaxCapacity(profile.getMaxCapacity());
         profileDB.setPrice(profile.getPrice());
         profileDB.setStatus(profile.getStatus());

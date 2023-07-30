@@ -40,6 +40,9 @@ public class SpringSecurityConfig {
                 // Establece que cualquiera puede ejecutar los endpoints de esa ruta
                 .requestMatchers("/api/auth/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-resources/**",
                         "/swagger-ui.html", "/webjars/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/activities").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/activities/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/activities").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/activity-profiles/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/activity-profiles").permitAll()
                 // Para cualquier otra request, debe haber un usuario autenticado.

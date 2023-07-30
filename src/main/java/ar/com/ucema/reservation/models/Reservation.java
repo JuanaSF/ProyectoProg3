@@ -31,6 +31,9 @@ public class Reservation {
 
     private Double price;
 
+    @Column(name = "telephone_contact")
+    private String telephoneContact;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ReservationStatusEnum status;
@@ -111,6 +114,14 @@ public class Reservation {
 
     public void setAttendees(List<Attendee> attendees) {
         this.attendees = attendees;
+    }
+
+    public String getTelephoneContact() {
+        return telephoneContact;
+    }
+
+    public void setTelephoneContact(String telephoneContact) {
+        this.telephoneContact = telephoneContact;
     }
 
     public void loadAttendee(Attendee attendee) {

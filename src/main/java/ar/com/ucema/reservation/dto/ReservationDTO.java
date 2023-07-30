@@ -1,9 +1,5 @@
 package ar.com.ucema.reservation.dto;
 
-import ar.com.ucema.reservation.enumeration.ReservationStatusEnum;
-import ar.com.ucema.reservation.models.Attendee;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +8,7 @@ public class ReservationDTO {
     private Long activityId;
     private LocalDateTime reservationDate;
     private Double price;
+    private String telephoneContact;
     private List<AttendeeDTO> attendees;
 
     public Long getActivityId() {
@@ -44,5 +41,13 @@ public class ReservationDTO {
 
     public void setAttendees(List<AttendeeDTO> attendees) {
         this.attendees = attendees;
+    }
+
+    public String getTelephoneContact() {
+        return telephoneContact;
+    }
+
+    public void setTelephoneContact(String telephoneContact) {
+        this.telephoneContact = telephoneContact;
     }
 }

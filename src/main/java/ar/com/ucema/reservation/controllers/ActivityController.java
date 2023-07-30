@@ -22,7 +22,7 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
-    @PreAuthorize("hasAuthority('PROVIDER')")
+    //@PreAuthorize("hasAuthority('PROVIDER')")
     @Operation(summary = "endpoint to create an activity")
     @PostMapping
     public ResponseEntity<Activity> createActivityProfile(@RequestBody ActivityDTO activity) {

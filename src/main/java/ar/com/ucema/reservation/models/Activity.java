@@ -21,9 +21,12 @@ public class Activity {
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 1000)
     private String description;
 
     private String category;
+
+    private String mainImage;
 
     @Column(nullable = false)
     private Integer availableCapacity;
@@ -67,6 +70,14 @@ public class Activity {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public Integer getAvailableCapacity() {

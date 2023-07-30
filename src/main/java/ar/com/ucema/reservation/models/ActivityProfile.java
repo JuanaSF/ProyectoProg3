@@ -22,7 +22,10 @@ public class ActivityProfile {
     @Column(nullable = false)
     private String title;
 
+    @Column(length = 1000)
     private String description;
+
+    private String mainImage;
 
     private String category;
 
@@ -43,10 +46,12 @@ public class ActivityProfile {
     public ActivityProfile() {
     }
 
-    public ActivityProfile(String title, String description, String category, Integer maxCapacity, Double price, ActivityProfileStatusEnum status) {
+    public ActivityProfile(String title, String description, String category, String mainImage, Integer maxCapacity,
+                           Double price, ActivityProfileStatusEnum status) {
         this.title = title;
         this.description = description;
         this.category = category;
+        this.mainImage = mainImage;
         this.maxCapacity = maxCapacity;
         this.price = price;
         this.status = status;
@@ -86,6 +91,14 @@ public class ActivityProfile {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getMainImage() {
+        return mainImage;
+    }
+
+    public void setMainImage(String mainImage) {
+        this.mainImage = mainImage;
     }
 
     public void setCategory(String category) {

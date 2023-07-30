@@ -54,7 +54,8 @@ public class ReservationServiceImpl implements ReservationService {
         newReservation.setActivity(activity);
         newReservation.setReservationDate(reservation.getReservationDate());
         newReservation.setCreationDate(LocalDateTime.now());
-        newReservation.setPrice(newReservation.getPrice());
+        newReservation.setPrice(reservation.getPrice());
+        newReservation.setTelephoneContact(reservation.getTelephoneContact());
         newReservation.setStatus(ReservationStatusEnum.CONFIRMED);
         newReservation.setAttendeeCount(reservation.getAttendees().size());
 
